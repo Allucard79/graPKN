@@ -1,7 +1,69 @@
+@import url("https://fonts.googleapis.com/css?family=Slabo+27px");
 * {
   margin: 0;
   padding: 0;
   border: 0;
   -moz-box-sizing: border-box;
+}
+
+body {
+  font-family: 'Slabo 27px', serif;
+}
+
+.container {
+  margin: 0 auto;
+  text-align: center;
+  background-color: #6a89cc;
+  padding-bottom: 30px;
+}
+
+header {
+  background-color: #f6b93b;
+  padding: 20px;
+}
+
+header h1 {
+  color: #34495e;
+}
+
+.button {
+  display: inline-block;
+  padding: 15px;
+}
+
+.button img:hover {
+  cursor: pointer;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
+.game {
+  border: 3px solid white;
+  color: white;
+  width: 400px;
+  margin: 20px auto;
+  font-size: 36px;
+  padding: 20px;
+  position: relative;
+}
+
+.game .score .box {
+  background-color: #eb2f06;
+  padding: 5px;
+  border-radius: 4px;
+  color: #34495e;
+  font-size: 24px;
+}
+
+.game #playerOne {
+  position: absolute;
+  left: 110px;
+}
+
+.game #playerTwo {
+  position: absolute;
+  right: 106px;
 }
 /*# sourceMappingURL=style.css.map */
