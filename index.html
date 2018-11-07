@@ -5,10 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Gra: papier, nozyce, kamien</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="sass\style.css" />
+    <script src="js\script.js"></script>
 </head>
 <body>
-    
+    <div class="container">
+        <header>
+            <h1 class="title">Gra - papier, nożyczki, kamień.</h1>
+        </header>
+        <div class="buttons">
+                <div id="paper" class="button">
+                    <img src="images\papier.png" alt="papier">
+                </div>
+                <div id="rock" class="button">
+                    <img src="images\kamiem.png" alt="kamień">
+                </div>
+                <div id="scissors" class="button">
+                    <img src="images\nozyce.png" alt="nożyczki">
+                </div>
+            </div>
+        <div class="game">
+            <div class="score">
+                <div id="playerOne" class="box">Gracz 1</div>
+                <div id="playerTwo" class="box">Gracz 2</div>
+                <span id="playerOneScore">score</span>-<span id="playerTwoScore">score</span>
+            </div>
+            <div id="output" class="messages">
+                <p>komunikaty generowane przez grę</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
