@@ -48,6 +48,7 @@ header {
     position: relative;
     .score .box{
         background-color: #eb2f06;
+        border: 1px solid black;
         padding: 5px;
         border-radius: 4px;
         color: #34495e;
@@ -55,10 +56,10 @@ header {
     }
     #playerOne {
         position: absolute;
-        left: 110px;
+        left: 100px;
     }
     #playerTwo {
         position: absolute;
-        right: 106px;
+        right: 100px;
     }
 }
