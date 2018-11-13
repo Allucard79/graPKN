@@ -109,6 +109,7 @@ function NewGame(){
     if(clicks==1) {
         howMany = window.prompt('Do ilu wygranych gramy ?');
         round.innerHTML = 'Gra toczy się do ' + howMany + ' pkt';
+        messagesBoard.innerHTML = 'Wybierz papier, kamień lub nożyczki';
         button2.innerHTML = 'Reset';
     }
     else if(clicks==2) {
