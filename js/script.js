@@ -1,5 +1,10 @@
+'use strict';
+
 var playerScore = 0;
 var compScore = 0;
+var howMany;
+var clicks=0;
+const round = document.querySelector('.game > p');
 const playerSpan = document.getElementById('playerOneScore');
 const compSpan = document.getElementById('playerTwoScore');
 const scoreBoard = document.querySelector('.score');
@@ -7,6 +12,8 @@ const messagesBoard = document.querySelector('.messages > p');
 const paperButton = document.getElementById('paper');
 const rockButton = document.getElementById('rock');
 const scissorsButton = document.getElementById('scissors');
+const button2 = document.getElementById('greeter-button');
+
 
 function getComputerChoice() {
     const choices = ['paper','rock','scissors'];
@@ -20,18 +27,28 @@ function translate(word) {
     return 'Nożyczki';
 }
 
+
 function playerWin(user, computer) {
+    howMany=parseFloat(howMany);
     playerScore++;
     playerSpan.innerHTML = playerScore;
     compSpan.innerHTML = compScore;
     messagesBoard.innerHTML = translate(user) + ' > ' + translate(computer) + '<br>Wygrywa Gracz 1 !!!';
+    if(howMany===playerScore) {
+        messagesBoard.innerHTML = 'Gratuluje , wygrałeś całą rozgrywkę !';
+        disableButton();
 }
-
+}
 function compWin(user, computer) {
+    howMany=parseFloat(howMany);
     compScore++;
     playerSpan.innerHTML = playerScore;
     compSpan.innerHTML = compScore;
     messagesBoard.innerHTML = translate(user) + ' < ' + translate(computer) + '<br>Wygrywa Gracz 2 !!!';
+    if(howMany===compScore) {
+        messagesBoard.innerHTML = 'Tym razem wygrał Gracz 2 !';
+        disableButton();
+}
 }
 
 function draw(user, computer) {
@@ -59,7 +76,9 @@ function game(userChoice) {
         draw(userChoice, computerChoice);
         break;
     }
+    
 }
+
 
 function main() {
     paperButton.addEventListener('click', function() {
@@ -74,5 +93,25 @@ function main() {
         game('scissors');
     })
 }
-
 main();
+function NewGame(){
+    location.reload();
+    }
+
+    function disableButton() {
+    document.getElementById('paper').disabled = true;
+    document.getElementById('rock').disabled = true;
+    document.getElementById('scissors').disabled = true;
+    };
+
+    button2.addEventListener('click', function () {
+    clicks+=1;
+    if(clicks==1) {
+        howMany = window.prompt('Do ilu wygranych gramy ?');
+        round.innerHTML = 'Gra toczy się do ' + howMany + ' pkt';
+        button2.innerHTML = 'Reset';
+    }
+    else if(clicks==2) {
+        NewGame();
+    }
+}) 

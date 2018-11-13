@@ -3,7 +3,8 @@
   margin: 0;
   padding: 0;
   border: 0;
-  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 body {
@@ -49,10 +50,14 @@ header h1 {
   position: relative;
 }
 
+.game p {
+  padding: 5px;
+}
+
 .game .score .box {
   background-color: #eb2f06;
   border: 1px solid black;
-  padding: 5px;
+  padding: 10px;
   border-radius: 4px;
   color: #34495e;
   font-size: 24px;
@@ -60,11 +65,51 @@ header h1 {
 
 .game #playerOne {
   position: absolute;
-  left: 100px;
+  left: 70px;
 }
 
 .game #playerTwo {
   position: absolute;
-  right: 100px;
+  right: 70px;
+}
+
+#greeter-button {
+  display: inline-block;
+  padding: 11px 50px;
+  max-width: 100%;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  color: #fff;
+  background-color: #02ac46;
+  border: 2px solid #02ac46;
+  border-radius: 4px;
+  -webkit-transition: color .3s, background-color .3s;
+  transition: color .3s, background-color .3s;
+  cursor: pointer;
+  outline: 0 !important;
+  text-decoration: none;
+  -ms-touch-action: manipulation;
+      touch-action: manipulation;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+#greeter-button:hover {
+  color: #02ac46;
+  background-color: #fff;
+}
+
+button {
+  background-color: #6a89cc;
+}
+
+.disabledDiv {
+  pointer-events: none;
+  opacity: 0.4;
 }
 /*# sourceMappingURL=style.css.map */
