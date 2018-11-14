@@ -33,9 +33,9 @@ function playerWin(user, computer) {
     playerScore++;
     playerSpan.innerHTML = playerScore;
     compSpan.innerHTML = compScore;
-    messagesBoard.innerHTML = translate(user) + ' > ' + translate(computer) + '<br>Wygrywa Gracz 1 !!!';
+    messagesBoard.innerHTML = translate(user) + ' > ' + translate(computer) + '<br>punkt zdobywa Gracz ';
     if (howMany === playerScore) {
-        messagesBoard.innerHTML = 'Gratuluje , wygrałeś całą rozgrywkę !';
+        messagesBoard.innerHTML += 'Gratuluje , wygrałeś całą rozgrywkę !';
         disableButton();
     }
 }
@@ -45,9 +45,9 @@ function compWin(user, computer) {
     compScore++;
     playerSpan.innerHTML = playerScore;
     compSpan.innerHTML = compScore;
-    messagesBoard.innerHTML = translate(user) + ' < ' + translate(computer) + '<br>Wygrywa Gracz 2 !!!';
+    messagesBoard.innerHTML = translate(user) + ' < ' + translate(computer) + '<br>Punkt dla Komputera ';
     if (howMany === compScore) {
-        messagesBoard.innerHTML = 'Tym razem wygrał Gracz 2 !';
+        messagesBoard.innerHTML += 'Tym razem wygrał Komputer !';
         disableButton();
     }
 }
@@ -55,7 +55,7 @@ function compWin(user, computer) {
 function draw(user, computer) {
     playerSpan.innerHTML = playerScore;
     compSpan.innerHTML = compScore;
-    messagesBoard.innerHTML = translate(user) + ' = ' + translate(computer) + '<br>Mamy remis !!!';
+    messagesBoard.innerHTML = translate(user) + ' = ' + translate(computer) + '<br>Mamy remis';
 }
 
 function game(userChoice) {
