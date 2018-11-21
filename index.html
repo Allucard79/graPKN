@@ -15,13 +15,13 @@
             <h1 class="title">Gra - papier, kamień, nożyczki.</h1>
         </header>
         <div class="buttons">
-            <button id="paper" class="button">
+            <button id="paper" class="button player-move" data-move="paper">
                 <img src="images\papier.png" alt="papier">
             </button>
-            <button id="rock" class="button">
+            <button id="rock" class="button player-move" data-move="rock">
                 <img src="images\kamien.png" alt="kamień">
             </button>
-            <button id="scissors" class="button">
+            <button id="scissors" class="button player-move" data-move="scissors">
                 <img src="images\nozyce.png" alt="nożyczki">
             </button>
         </div>
@@ -36,7 +36,8 @@
                 <p>Aby rozpocząć grę kliknij zielony przycisk</p>
             </div>
         </div>
-        <button id="greeter-button">Nowa gra</button>
+        <button id="greeter-button">NOWA GRA</button>
+        <button id="greeter-button2" onclick="displayButton()">RESET</button>
     </div>
     </div>
     <script src="js\script.js"></script>

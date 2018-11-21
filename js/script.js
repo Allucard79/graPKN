@@ -1,19 +1,19 @@
 'use strict';
-
-var playerScore = 0;
-var compScore = 0;
-var howMany;
-var clicks = 0;
-const round = document.querySelector('.game > p');
-const playerSpan = document.getElementById('playerOneScore');
-const compSpan = document.getElementById('playerTwoScore');
-const scoreBoard = document.querySelector('.score');
-const messagesBoard = document.querySelector('.messages > p');
-const paperButton = document.getElementById('paper');
-const rockButton = document.getElementById('rock');
-const scissorsButton = document.getElementById('scissors');
-const button2 = document.getElementById('greeter-button');
-
+var params = {
+playerScore: 0,
+compScore: 0,
+howMany: 0,
+round: document.querySelector('.game > p'),
+playerSpan: document.getElementById('playerOneScore'),
+compSpan: document.getElementById('playerTwoScore'),
+scoreBoard: document.querySelector('.score'),
+messagesBoard: document.querySelector('.messages > p'),
+paperButton: document.getElementById('paper'),
+rockButton: document.getElementById('rock'),
+scissorsButton: document.getElementById('scissors'),
+startButton: document.getElementById('greeter-button'),
+resetButton: document.getElementById('greeter-button2'),
+}
 
 function getComputerChoice() {
     const choices = ['paper', 'rock', 'scissors'];
@@ -29,33 +29,33 @@ function translate(word) {
 
 
 function playerWin(user, computer) {
-    howMany = parseFloat(howMany);
-    playerScore++;
-    playerSpan.innerHTML = playerScore;
-    compSpan.innerHTML = compScore;
-    messagesBoard.innerHTML = translate(user) + ' > ' + translate(computer) + '<br>punkt zdobywa Gracz ';
-    if (howMany === playerScore) {
-        messagesBoard.innerHTML += 'Gratuluje , wygrałeś całą rozgrywkę !';
+    params.howMany = parseFloat(params.howMany);
+    params.playerScore++;
+    params.playerSpan.innerHTML = params.playerScore;
+    params.compSpan.innerHTML = params.compScore;
+    params.messagesBoard.innerHTML = translate(user) + ' > ' + translate(computer) + '<br>punkt zdobywa Gracz ';
+    if (params.howMany === params.playerScore) {
+        params.messagesBoard.innerHTML += 'Gratuluje , wygrałeś całą rozgrywkę !';
         disableButton();
     }
 }
 
 function compWin(user, computer) {
-    howMany = parseFloat(howMany);
-    compScore++;
-    playerSpan.innerHTML = playerScore;
-    compSpan.innerHTML = compScore;
-    messagesBoard.innerHTML = translate(user) + ' < ' + translate(computer) + '<br>Punkt dla Komputera ';
-    if (howMany === compScore) {
-        messagesBoard.innerHTML += 'Tym razem wygrał Komputer !';
+    params.howMany = parseFloat(params.howMany);
+    params.compScore++;
+    params.playerSpan.innerHTML = params.playerScore;
+    params.compSpan.innerHTML = params.compScore;
+    params.messagesBoard.innerHTML = translate(user) + ' < ' + translate(computer) + '<br>Punkt dla Komputera ';
+    if (params.howMany === params.compScore) {
+        params.messagesBoard.innerHTML += 'Tym razem wygrał Komputer !';
         disableButton();
     }
 }
 
 function draw(user, computer) {
-    playerSpan.innerHTML = playerScore;
-    compSpan.innerHTML = compScore;
-    messagesBoard.innerHTML = translate(user) + ' = ' + translate(computer) + '<br>Mamy remis';
+    params.playerSpan.innerHTML = params.playerScore;
+    params.compSpan.innerHTML = params.compScore;
+    params.messagesBoard.innerHTML = translate(user) + ' = ' + translate(computer) + '<br>Mamy remis';
 }
 
 function game(userChoice) {
@@ -80,22 +80,27 @@ function game(userChoice) {
 }
 
 function main() {
-    paperButton.addEventListener('click', function () {
-        game('paper');
-    })
 
-    rockButton.addEventListener('click', function () {
-        game('rock');
-    })
+    const buttons = document.querySelectorAll('.player-move');
 
-    scissorsButton.addEventListener('click', function () {
-        game('scissors');
-    })
+    for(let i = 0; i<buttons.length; i++) {
+        const buttType = buttons[i].getAttribute('data-move');
+        buttons[i].addEventListener('click', function () {
+            game(buttType);
+        });
+    }
 }
 main();
 
-function NewGame() {
-    location.reload();
+function newGame() {
+    params.playerScore = 0,
+    params.compScore = 0,
+    params.howMany = 0,
+    params.playerSpan.innerHTML = params.playerScore;
+    params.compSpan.innerHTML = params.compScore;
+    params.round.innerHTML = 'Gotowy ?';
+    params.messagesBoard.innerHTML = 'Aby rozpocząć grę kliknij zielony przycisk';
+
 }
 
 function disableButton() {
@@ -104,14 +109,27 @@ function disableButton() {
     document.getElementById('scissors').disabled = true;
 };
 
-button2.addEventListener('click', function () {
-    clicks += 1;
-    if (clicks == 1) {
-        howMany = window.prompt('Do ilu wygranych gramy ?');
-        round.innerHTML = 'Gra toczy się do ' + howMany + ' pkt';
-        messagesBoard.innerHTML = 'Wybierz papier, kamień lub nożyczki';
-        button2.innerHTML = 'Reset';
-    } else if (clicks == 2) {
-        NewGame();
-    }
+function enableButton() {
+    document.getElementById('paper').disabled = false;
+    document.getElementById('rock').disabled = false;
+    document.getElementById('scissors').disabled = false;
+};
+
+function displayButton() {
+    params.resetButton.style.display = 'inline-block';
+    params.startButton.style.display = 'none';
+}
+
+params.startButton.addEventListener('click', function () {
+    params.howMany = window.prompt('Do ilu wygranych gramy ?');
+    params.round.innerHTML = 'Gra toczy się do ' + params.howMany + ' pkt';
+    params.messagesBoard.innerHTML = 'Wybierz papier, kamień lub nożyczki';
+    displayButton();
+})
+
+params.resetButton.addEventListener('click', function () {
+    newGame();
+    enableButton();
+    params.resetButton.style.display = 'none';
+    params.startButton.style.display = 'inline-block';
 })
