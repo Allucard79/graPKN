@@ -1,1 +1,1 @@
-https://allucard79.github.io/pierwszaGra/
+https://allucard79.github.io/graPKN/
