@@ -1,18 +1,18 @@
 'use strict';
 var params = {
-playerScore: 0,
-compScore: 0,
-howMany: 0,
-round: document.querySelector('.game > p'),
-playerSpan: document.getElementById('playerOneScore'),
-compSpan: document.getElementById('playerTwoScore'),
-scoreBoard: document.querySelector('.score'),
-messagesBoard: document.querySelector('.messages > p'),
-paperButton: document.getElementById('paper'),
-rockButton: document.getElementById('rock'),
-scissorsButton: document.getElementById('scissors'),
-startButton: document.getElementById('greeter-button'),
-resetButton: document.getElementById('greeter-button2'),
+    playerScore: 0,
+    compScore: 0,
+    howMany: 0,
+    round: document.querySelector('.game > p'),
+    playerSpan: document.getElementById('playerOneScore'),
+    compSpan: document.getElementById('playerTwoScore'),
+    scoreBoard: document.querySelector('.score'),
+    messagesBoard: document.querySelector('.messages > p'),
+    paperButton: document.getElementById('paper'),
+    rockButton: document.getElementById('rock'),
+    scissorsButton: document.getElementById('scissors'),
+    startButton: document.getElementById('greeter-button'),
+    resetButton: document.getElementById('greeter-button2'),
 }
 
 function getComputerChoice() {
@@ -37,6 +37,7 @@ function playerWin(user, computer) {
     if (params.howMany === params.playerScore) {
         params.messagesBoard.innerHTML += 'Gratuluje , wygrałeś całą rozgrywkę !';
         disableButton();
+        showModal();
     }
 }
 
@@ -49,6 +50,7 @@ function compWin(user, computer) {
     if (params.howMany === params.compScore) {
         params.messagesBoard.innerHTML += 'Tym razem wygrał Komputer !';
         disableButton();
+        showModal();
     }
 }
 
@@ -83,7 +85,7 @@ function main() {
 
     const buttons = document.querySelectorAll('.player-move');
 
-    for(let i = 0; i<buttons.length; i++) {
+    for (let i = 0; i < buttons.length; i++) {
         const buttType = buttons[i].getAttribute('data-move');
         buttons[i].addEventListener('click', function () {
             game(buttType);
@@ -94,9 +96,9 @@ main();
 
 function newGame() {
     params.playerScore = 0,
-    params.compScore = 0,
-    params.howMany = 0,
-    params.playerSpan.innerHTML = params.playerScore;
+        params.compScore = 0,
+        params.howMany = 0,
+        params.playerSpan.innerHTML = params.playerScore;
     params.compSpan.innerHTML = params.compScore;
     params.round.innerHTML = 'Gotowy ?';
     params.messagesBoard.innerHTML = 'Aby rozpocząć grę kliknij zielony przycisk';
@@ -133,3 +135,37 @@ params.resetButton.addEventListener('click', function () {
     params.resetButton.style.display = 'none';
     params.startButton.style.display = 'inline-block';
 })
+
+function showModal() {
+    var allModals = document.querySelectorAll('.modal');
+    for (var i = 0; i < allModals.length; i++) {
+        allModals[i].classList.remove('show');
+    }
+
+    if (params.howMany === params.playerScore) {
+        document.querySelector('#modal-one').classList.add('show');
+    } else document.querySelector('#modal-two').classList.add('show');
+    document.querySelector('#modal-overlay').classList.add('show');
+
+}
+
+var hideModal = function (event) {
+    event.preventDefault();
+    document.querySelector('#modal-overlay').classList.remove('show');
+};
+
+var closeButtons = document.querySelectorAll('.modal .close');
+
+for (var i = 0; i < closeButtons.length; i++) {
+    closeButtons[i].addEventListener('click', hideModal);
+}
+
+document.querySelector('#modal-overlay').addEventListener('click', hideModal);
+
+var modals = document.querySelectorAll('.modal');
+
+for (var i = 0; i < modals.length; i++) {
+    modals[i].addEventListener('click', function (event) {
+        event.stopPropagation();
+    });
+}

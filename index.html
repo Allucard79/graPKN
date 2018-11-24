@@ -25,14 +25,14 @@
                 <img src="images\nozyce.png" alt="nożyczki">
             </button>
         </div>
-        <div class="game">
+        <div class="game" >
             <p>Gotowy ?</p>
             <div class="score">
                 <div id="playerOne" class="box">Gracz</div>
                 <div id="playerTwo" class="box">Komp.</div>
                 <span id="playerOneScore">0</span> - <span id="playerTwoScore">0</span>
             </div>
-            <div id="output" class="messages">
+            <div id="output" class="messages show-modal">
                 <p>Aby rozpocząć grę kliknij zielony przycisk</p>
             </div>
         </div>
@@ -40,6 +40,21 @@
         <button id="greeter-button2" onclick="displayButton()">RESET</button>
     </div>
     </div>
+    <div class="overlay" id="modal-overlay">
+        <div class="modal" id="modal-one">
+            <a href="#" class="close">x</a>
+            <header>Koniec gry</header>
+            <div class="content">
+                <p>Gratuluje , wygrałeś całą rozgrywkę !</p>
+            </div>
+        </div>
+        <div class="modal" id="modal-two">
+            <a href="#" class="close">x</a>
+            <header>Koniec gry</header>
+            <div class="content">
+                <p>Tym razem wygrał Komputer !</p>
+            </div>
+        </div>
     <script src="js\script.js"></script>
 </body>
 
