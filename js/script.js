@@ -13,7 +13,21 @@ var params = {
     scissorsButton: document.getElementById('scissors'),
     startButton: document.getElementById('greeter-button'),
     resetButton: document.getElementById('greeter-button2'),
+    progress: [],
+    roundData: {},
+    table: document.getElementById("table"),
 }
+
+params.roundData = {
+    rundy: 1,
+    gracz: 'kamien',
+    Kompu: 'papier',
+    kto: 'gracz',
+    wynik: '0-1',
+}
+
+params.progress.push(Object.values(params.roundData));
+makeTable(params.progress);
 
 function getComputerChoice() {
     const choices = ['paper', 'rock', 'scissors'];
@@ -96,9 +110,9 @@ main();
 
 function newGame() {
     params.playerScore = 0,
-        params.compScore = 0,
-        params.howMany = 0,
-        params.playerSpan.innerHTML = params.playerScore;
+    params.compScore = 0,
+    params.howMany = 0,
+    params.playerSpan.innerHTML = params.playerScore;
     params.compSpan.innerHTML = params.compScore;
     params.round.innerHTML = 'Gotowy ?';
     params.messagesBoard.innerHTML = 'Aby rozpocząć grę kliknij zielony przycisk';
@@ -169,3 +183,19 @@ for (var i = 0; i < modals.length; i++) {
         event.stopPropagation();
     });
 }
+
+function makeTable(array) {
+    for (var i = 0; i < array.length; i++) {
+        var row = document.createElement('tr');
+        for (var j = 0; j < array[i].length; j++) {
+            var cell = document.createElement('td');
+            cell.textContent = array[i][j];
+            row.appendChild(cell);
+        }
+        table.appendChild(row);
+    }
+    return table;
+}
+
+
+

@@ -137,7 +137,7 @@ button {
 .modal {
 	display: none;
 	background: #fff;
-	width: 200px;
+	width: 400px;
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -168,4 +168,8 @@ button {
 		min-height: 30px;
 		padding: 5px 30px;
 	}
+}
+
+table, th, td {
+    border: 1px solid black;
 }
