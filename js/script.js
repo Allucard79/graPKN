@@ -3,6 +3,9 @@ var params = {
     playerScore: 0,
     compScore: 0,
     howMany: 0,
+    roundNr: 0,
+    progress: [],
+    table: document.getElementById("table"),
     round: document.querySelector('.game > p'),
     playerSpan: document.getElementById('playerOneScore'),
     compSpan: document.getElementById('playerTwoScore'),
@@ -13,11 +16,8 @@ var params = {
     scissorsButton: document.getElementById('scissors'),
     startButton: document.getElementById('greeter-button'),
     resetButton: document.getElementById('greeter-button2'),
-    progress: [],
-    roundNr: 0,
-    table: document.getElementById("table"),
 }
-
+// funkcja zapisuje parametry gry po każdej rundzie
 function saveRound(playerChoice, computerChoice, winner) {
     params.roundNr++;
     params.progress.push({
@@ -28,63 +28,54 @@ function saveRound(playerChoice, computerChoice, winner) {
         Score: 'Score: ' + params.playerScore + ' - ' + params.compScore,
     });
 }
-
+// funkcja losuje wybór komputera
 function getComputerChoice() {
     const choices = ['paper', 'rock', 'scissors'];
     const randomNr = Math.floor(Math.random() * 3);
     return choices[randomNr];
 }
-
+// funkcja zamienia wyrazy z ang na pol
 function translate(word) {
     if (word === 'paper') return 'Papier';
     if (word === 'rock') return 'Kamień';
     return 'Nożyczki';
 }
-
-
+// funkcja obsługująca zdarzenia kiedy wygrywa gracz
 function playerWin(user, computer) {
     params.howMany = parseFloat(params.howMany);
     params.playerScore++;
-    saveRound(user, computer, 'player');
     params.playerSpan.innerHTML = params.playerScore;
     params.compSpan.innerHTML = params.compScore;
-
     params.messagesBoard.innerHTML = translate(user) + ' > ' + translate(computer) + '<br>punkt zdobywa Gracz ';
-
+    saveRound(user, computer, 'player');
     if (params.howMany === params.playerScore) {
         params.messagesBoard.innerHTML += 'Gratuluje , wygrałeś całą rozgrywkę !';
-
         disableButton();
         showModal();
     }
-
 }
-
+// funkcja obsługująca zdarzenia kiedy wygrywa komputer
 function compWin(user, computer) {
     params.howMany = parseFloat(params.howMany);
     params.compScore++;
-    saveRound(user, computer, 'computer');
     params.playerSpan.innerHTML = params.playerScore;
     params.compSpan.innerHTML = params.compScore;
-
     params.messagesBoard.innerHTML = translate(user) + ' < ' + translate(computer) + '<br>Punkt dla Komputera ';
-
+    saveRound(user, computer, 'computer');
     if (params.howMany === params.compScore) {
         params.messagesBoard.innerHTML += 'Tym razem wygrał Komputer !';
-
         disableButton();
         showModal();
     }
-
 }
-
+// funkcja obsługująca zdarzenia kiedy mamy remis
 function draw(user, computer) {
     params.playerSpan.innerHTML = params.playerScore;
     params.compSpan.innerHTML = params.compScore;
-    saveRound(user, computer, 'draw');
     params.messagesBoard.innerHTML = translate(user) + ' = ' + translate(computer) + '<br>Mamy remis';
+    saveRound(user, computer, 'draw');
 }
-
+// funkcja obslugująca grę - wybór gracza porównuje z wyborem komputera
 function game(userChoice) {
     const computerChoice = getComputerChoice();
 
@@ -99,97 +90,60 @@ function game(userChoice) {
         case 'scissorsrock':
             compWin(userChoice, computerChoice);
             break;
-        case 'paperpaper':
-        case 'rockrock':
-        case 'scissorsscissors':
+        default:
             draw(userChoice, computerChoice);
             break;
     }
 }
-
-
-
+// funkcja resetuje wszystkie ustawienia do początkowego stanu gry
 function newGame() {
-    params.playerScore = 0,
-        params.compScore = 0,
-        params.howMany = 0,
-
-        params.playerSpan.innerHTML = params.playerScore;
-    params.compSpan.innerHTML = params.compScore;
-    params.round.innerHTML = 'Gotowy ?';
-    params.messagesBoard.innerHTML = 'Aby rozpocząć grę kliknij zielony przycisk';
+    location.reload();
 }
-
+// funkcja wył. przyciski
 function disableButton() {
     document.getElementById('paper').disabled = true;
     document.getElementById('rock').disabled = true;
     document.getElementById('scissors').disabled = true;
 };
-
-function enableButton() {
-    document.getElementById('paper').disabled = false;
-    document.getElementById('rock').disabled = false;
-    document.getElementById('scissors').disabled = false;
-};
-
+// funkcja wyswietlajaca/ukrywająca przycisk
 function displayButton() {
     params.resetButton.style.display = 'inline-block';
     params.startButton.style.display = 'none';
 }
-
+// nasluchuje klikniecia w przycisk start i pyta o ilosc rund
 params.startButton.addEventListener('click', function () {
     params.howMany = window.prompt('Do ilu wygranych gramy ?');
     params.round.innerHTML = 'Gra toczy się do ' + params.howMany + ' pkt';
     params.messagesBoard.innerHTML = 'Wybierz papier, kamień lub nożyczki';
     displayButton();
 })
-
-
+// nasluchuje klikniecia w przycisk restart i przeladowuje strone
 params.resetButton.addEventListener('click', function () {
     newGame();
-    enableButton();
-    params.resetButton.style.display = 'none';
-    params.startButton.style.display = 'inline-block';
-    
 })
-
+// funkcja pokazuje modal
 function showModal() {
     var modal = document.getElementById('modal');
-
     modal.parentNode.classList.add('show');
-
     makeTable();
 }
-
+// funkcja ukrywa modal
 var hideModal = function (event) {
     event.preventDefault();
-
     var modal = document.getElementById('modal');
-
     modal.parentNode.classList.remove('show');
 };
-
+// zamykamy albo X albo klikajac w dowolne miejsce poza okienkiem modala
 var closeButtons = document.querySelectorAll('.modal .close');
-
 for (var i = 0; i < closeButtons.length; i++) {
     closeButtons[i].addEventListener('click', hideModal);
 }
 document.querySelector('#modal-overlay').addEventListener('click', hideModal);
-
-// var modals = document.querySelectorAll('.modal');
-
-// for (var i = 0; i < modals.length; i++) {
-//     modals[i].addEventListener('click', function (event) {
-//         event.stopPropagation();
-//     });
-// }
-
+// funkcja tworzy tabele z elementow pobranych z tablicy progress
 function makeTable() {
     var container = document.getElementById('table-container');
 
     const table = document.createElement('table');
-    var header = document.createElement("tr");
-    var headers = params.progress[0];
 
     for (var i = 0; i < params.progress.length; i++) {
         var row = document.createElement('tr');
@@ -216,11 +170,9 @@ function makeTable() {
 
         table.appendChild(row);
     }
-
     container.appendChild(table);
 }
-
-
+// glowna funkcja realizuje w petli zdarzenie - ruch gracza
 function main() {
     const buttons = document.querySelectorAll('.player-move');
 
