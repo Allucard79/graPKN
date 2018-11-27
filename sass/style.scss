@@ -135,9 +135,9 @@ button {
 }
 
 .modal {
-	display: none;
+    text-align: center;
 	background: #fff;
-	width: 400px;
+	width: 500px;
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -170,6 +170,11 @@ button {
 	}
 }
 
-table, th, td {
+table{
+    margin: 0 auto;
     border: 1px solid black;
+    th, td {
+        text-align: left;
+        border: 1px solid black;
+    }
 }

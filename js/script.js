@@ -14,20 +14,20 @@ var params = {
     startButton: document.getElementById('greeter-button'),
     resetButton: document.getElementById('greeter-button2'),
     progress: [],
-    roundData: {},
+    roundNr: 0,
     table: document.getElementById("table"),
 }
 
-params.roundData = {
-    rundy: 1,
-    gracz: 'kamien',
-    Kompu: 'papier',
-    kto: 'gracz',
-    wynik: '0-1',
+function saveRound(playerChoice, computerChoice, winner) {
+    params.roundNr++;
+    params.progress.push({
+        rounds: 'Round: ' + params.roundNr,
+        player: 'Player: ' + playerChoice,
+        computer: 'Comp: ' + computerChoice,
+        winner: 'Win: ' + winner,
+        Score: 'Score: ' + params.playerScore + ' - ' + params.compScore,
+    });
 }
-
-params.progress.push(Object.values(params.roundData));
-makeTable(params.progress);
 
 function getComputerChoice() {
     const choices = ['paper', 'rock', 'scissors'];
@@ -45,37 +45,49 @@ function translate(word) {
 function playerWin(user, computer) {
     params.howMany = parseFloat(params.howMany);
     params.playerScore++;
+    saveRound(user, computer, 'player');
     params.playerSpan.innerHTML = params.playerScore;
     params.compSpan.innerHTML = params.compScore;
+
     params.messagesBoard.innerHTML = translate(user) + ' > ' + translate(computer) + '<br>punkt zdobywa Gracz ';
+
     if (params.howMany === params.playerScore) {
         params.messagesBoard.innerHTML += 'Gratuluje , wygrałeś całą rozgrywkę !';
+
         disableButton();
         showModal();
     }
+
 }
 
 function compWin(user, computer) {
     params.howMany = parseFloat(params.howMany);
     params.compScore++;
+    saveRound(user, computer, 'computer');
     params.playerSpan.innerHTML = params.playerScore;
     params.compSpan.innerHTML = params.compScore;
+
     params.messagesBoard.innerHTML = translate(user) + ' < ' + translate(computer) + '<br>Punkt dla Komputera ';
+
     if (params.howMany === params.compScore) {
         params.messagesBoard.innerHTML += 'Tym razem wygrał Komputer !';
+
         disableButton();
         showModal();
     }
+
 }
 
 function draw(user, computer) {
     params.playerSpan.innerHTML = params.playerScore;
     params.compSpan.innerHTML = params.compScore;
+    saveRound(user, computer, 'draw');
     params.messagesBoard.innerHTML = translate(user) + ' = ' + translate(computer) + '<br>Mamy remis';
 }
 
 function game(userChoice) {
     const computerChoice = getComputerChoice();
+
     switch (userChoice + computerChoice) {
         case 'paperrock':
         case 'rockscissors':
@@ -95,28 +107,17 @@ function game(userChoice) {
     }
 }
 
-function main() {
 
-    const buttons = document.querySelectorAll('.player-move');
-
-    for (let i = 0; i < buttons.length; i++) {
-        const buttType = buttons[i].getAttribute('data-move');
-        buttons[i].addEventListener('click', function () {
-            game(buttType);
-        });
-    }
-}
-main();
 
 function newGame() {
     params.playerScore = 0,
-    params.compScore = 0,
-    params.howMany = 0,
-    params.playerSpan.innerHTML = params.playerScore;
+        params.compScore = 0,
+        params.howMany = 0,
+
+        params.playerSpan.innerHTML = params.playerScore;
     params.compSpan.innerHTML = params.compScore;
     params.round.innerHTML = 'Gotowy ?';
     params.messagesBoard.innerHTML = 'Aby rozpocząć grę kliknij zielony przycisk';
-
 }
 
 function disableButton() {
@@ -143,29 +144,29 @@ params.startButton.addEventListener('click', function () {
     displayButton();
 })
 
+
 params.resetButton.addEventListener('click', function () {
     newGame();
     enableButton();
     params.resetButton.style.display = 'none';
     params.startButton.style.display = 'inline-block';
+    
 })
 
 function showModal() {
-    var allModals = document.querySelectorAll('.modal');
-    for (var i = 0; i < allModals.length; i++) {
-        allModals[i].classList.remove('show');
-    }
+    var modal = document.getElementById('modal');
 
-    if (params.howMany === params.playerScore) {
-        document.querySelector('#modal-one').classList.add('show');
-    } else document.querySelector('#modal-two').classList.add('show');
-    document.querySelector('#modal-overlay').classList.add('show');
+    modal.parentNode.classList.add('show');
 
+    makeTable();
 }
 
 var hideModal = function (event) {
     event.preventDefault();
-    document.querySelector('#modal-overlay').classList.remove('show');
+
+    var modal = document.getElementById('modal');
+
+    modal.parentNode.classList.remove('show');
 };
 
 var closeButtons = document.querySelectorAll('.modal .close');
@@ -173,29 +174,63 @@ var closeButtons = document.querySelectorAll('.modal .close');
 for (var i = 0; i < closeButtons.length; i++) {
     closeButtons[i].addEventListener('click', hideModal);
 }
-
 document.querySelector('#modal-overlay').addEventListener('click', hideModal);
 
-var modals = document.querySelectorAll('.modal');
+// var modals = document.querySelectorAll('.modal');
 
-for (var i = 0; i < modals.length; i++) {
-    modals[i].addEventListener('click', function (event) {
-        event.stopPropagation();
-    });
-}
+// for (var i = 0; i < modals.length; i++) {
+//     modals[i].addEventListener('click', function (event) {
+//         event.stopPropagation();
+//     });
+// }
 
-function makeTable(array) {
-    for (var i = 0; i < array.length; i++) {
+function makeTable() {
+    var container = document.getElementById('table-container');
+
+    const table = document.createElement('table');
+    var header = document.createElement("tr");
+    var headers = params.progress[0];
+
+    for (var i = 0; i < params.progress.length; i++) {
         var row = document.createElement('tr');
-        for (var j = 0; j < array[i].length; j++) {
-            var cell = document.createElement('td');
-            cell.textContent = array[i][j];
-            row.appendChild(cell);
-        }
+
+        var cell = document.createElement('td');
+        cell.textContent = params.progress[i].rounds;
+        row.appendChild(cell);
+
+        var cell = document.createElement('td');
+        cell.textContent = params.progress[i].player;
+        row.appendChild(cell);
+
+        cell = document.createElement('td');
+        cell.textContent = params.progress[i].computer;
+        row.appendChild(cell);
+
+        cell = document.createElement('td');
+        cell.textContent = params.progress[i].winner;
+        row.appendChild(cell);
+
+        cell = document.createElement('td');
+        cell.textContent = params.progress[i].Score;
+        row.appendChild(cell);
+
         table.appendChild(row);
     }
-    return table;
+
+    container.appendChild(table);
 }
 
 
+function main() {
+    const buttons = document.querySelectorAll('.player-move');
 
+    for (let i = 0; i < buttons.length; i++) {
+        const buttType = buttons[i].getAttribute('data-move');
+        buttons[i].addEventListener('click', function () {
+            params.roundNr;
+            game(buttType);
+        });
+    }
+}
+
+main();

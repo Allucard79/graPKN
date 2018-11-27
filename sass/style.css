@@ -154,9 +154,9 @@ button {
 }
 
 .modal {
-  display: none;
+  text-align: center;
   background: #fff;
-  width: 400px;
+  width: 500px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -190,7 +190,13 @@ button {
   padding: 5px 30px;
 }
 
-table, th, td {
+table {
+  margin: 0 auto;
+  border: 1px solid black;
+}
+
+table th, table td {
+  text-align: left;
   border: 1px solid black;
 }
 /*# sourceMappingURL=style.css.map */
