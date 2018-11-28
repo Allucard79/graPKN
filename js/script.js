@@ -96,7 +96,7 @@ function game(userChoice) {
     }
 }
 // funkcja resetuje wszystkie ustawienia do początkowego stanu gry
-function newGame() {
+function resetGame() {
     location.reload();
 }
 // funkcja wył. przyciski
@@ -104,6 +104,12 @@ function disableButton() {
     document.getElementById('paper').disabled = true;
     document.getElementById('rock').disabled = true;
     document.getElementById('scissors').disabled = true;
+};
+// funkcja wł. przyciski
+function enalbeButton() {
+    document.getElementById('paper').disabled = false;
+    document.getElementById('rock').disabled = false;
+    document.getElementById('scissors').disabled = false;
 };
 // funkcja wyswietlajaca/ukrywająca przycisk
 function displayButton() {
@@ -113,13 +119,19 @@ function displayButton() {
 // nasluchuje klikniecia w przycisk start i pyta o ilosc rund
 params.startButton.addEventListener('click', function () {
     params.howMany = window.prompt('Do ilu wygranych gramy ?');
+    if(params.howMany<=0) {params.round.innerHTML = 'Liczba rund musi być większa od ZERA !';
+    disableButton();
+    }
+    else {
     params.round.innerHTML = 'Gra toczy się do ' + params.howMany + ' pkt';
     params.messagesBoard.innerHTML = 'Wybierz papier, kamień lub nożyczki';
     displayButton();
+    enalbeButton();
+    }
 })
 // nasluchuje klikniecia w przycisk restart i przeladowuje strone
 params.resetButton.addEventListener('click', function () {
-    newGame();
+    resetGame();
 })
 // funkcja pokazuje modal
 function showModal() {
@@ -148,25 +160,25 @@ function makeTable() {
     for (var i = 0; i < params.progress.length; i++) {
         var row = document.createElement('tr');
 
-        var cell = document.createElement('td');
-        cell.textContent = params.progress[i].rounds;
-        row.appendChild(cell);
+        var cell1 = document.createElement('td');
+        cell1.textContent = params.progress[i].rounds;
+        row.appendChild(cell1);
 
-        var cell = document.createElement('td');
-        cell.textContent = params.progress[i].player;
-        row.appendChild(cell);
+        var cell2 = document.createElement('td');
+        cell2.textContent = params.progress[i].player;
+        row.appendChild(cell2);
 
-        cell = document.createElement('td');
-        cell.textContent = params.progress[i].computer;
-        row.appendChild(cell);
+        var cell3 = document.createElement('td');
+        cell3.textContent = params.progress[i].computer;
+        row.appendChild(cell3);
 
-        cell = document.createElement('td');
-        cell.textContent = params.progress[i].winner;
-        row.appendChild(cell);
+        var cell4 = document.createElement('td');
+        cell4.textContent = params.progress[i].winner;
+        row.appendChild(cell4);
 
-        cell = document.createElement('td');
-        cell.textContent = params.progress[i].Score;
-        row.appendChild(cell);
+        var cell5 = document.createElement('td');
+        cell5.textContent = params.progress[i].Score;
+        row.appendChild(cell5);
 
         table.appendChild(row);
     }
