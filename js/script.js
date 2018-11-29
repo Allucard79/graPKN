@@ -46,7 +46,7 @@ function playerWin(user, computer) {
     params.playerScore++;
     params.playerSpan.innerHTML = params.playerScore;
     params.compSpan.innerHTML = params.compScore;
-    params.messagesBoard.innerHTML = translate(user) + ' > ' + translate(computer) + '<br>punkt zdobywa Gracz ';
+    params.messagesBoard.innerHTML = translate(user) + ' > ' + translate(computer) + '<br>punkt zdobywa Gracz<br> ';
     saveRound(user, computer, 'player');
     if (params.howMany === params.playerScore) {
         params.messagesBoard.innerHTML += 'Gratuluje , wygrałeś całą rozgrywkę !';
@@ -60,7 +60,7 @@ function compWin(user, computer) {
     params.compScore++;
     params.playerSpan.innerHTML = params.playerScore;
     params.compSpan.innerHTML = params.compScore;
-    params.messagesBoard.innerHTML = translate(user) + ' < ' + translate(computer) + '<br>Punkt dla Komputera ';
+    params.messagesBoard.innerHTML = translate(user) + ' < ' + translate(computer) + '<br>Punkt dla Komputera<br> ';
     saveRound(user, computer, 'computer');
     if (params.howMany === params.compScore) {
         params.messagesBoard.innerHTML += 'Tym razem wygrał Komputer !';
@@ -104,13 +104,13 @@ function disableButton() {
     document.getElementById('paper').disabled = true;
     document.getElementById('rock').disabled = true;
     document.getElementById('scissors').disabled = true;
-};
+}
 // funkcja wł. przyciski
 function enalbeButton() {
     document.getElementById('paper').disabled = false;
     document.getElementById('rock').disabled = false;
     document.getElementById('scissors').disabled = false;
-};
+}
 // funkcja wyswietlajaca/ukrywająca przycisk
 function displayButton() {
     params.resetButton.style.display = 'inline-block';
@@ -119,14 +119,15 @@ function displayButton() {
 // nasluchuje klikniecia w przycisk start i pyta o ilosc rund
 params.startButton.addEventListener('click', function () {
     params.howMany = window.prompt('Do ilu wygranych gramy ?');
-    if(params.howMany<=0) {params.round.innerHTML = 'Liczba rund musi być większa od ZERA !';
-    disableButton();
+    if (params.howMany <= 0 || isNaN(params.howMany)) {
+        params.round.innerHTML = 'Podałeś nieprawidłową wartość !';
+        disableButton();
     }
     else {
-    params.round.innerHTML = 'Gra toczy się do ' + params.howMany + ' pkt';
-    params.messagesBoard.innerHTML = 'Wybierz papier, kamień lub nożyczki';
-    displayButton();
-    enalbeButton();
+        params.round.innerHTML = 'Gra toczy się do ' + params.howMany + ' pkt';
+        params.messagesBoard.innerHTML = 'Wybierz papier, kamień lub nożyczki';
+        displayButton();
+        enalbeButton();
     }
 })
 // nasluchuje klikniecia w przycisk restart i przeladowuje strone
@@ -191,7 +192,6 @@ function main() {
     for (let i = 0; i < buttons.length; i++) {
         const buttType = buttons[i].getAttribute('data-move');
         buttons[i].addEventListener('click', function () {
-            params.roundNr;
             game(buttType);
         });
     }

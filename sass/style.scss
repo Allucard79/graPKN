@@ -41,7 +41,8 @@ header {
 .game {
     border: 3px solid white;
     color: white;
-    width: 400px;
+    width: 600px;
+    height: 400px;
     margin: 20px auto;
     font-size: 36px;
     padding: 20px;
@@ -49,22 +50,28 @@ header {
     p {
         padding: 5px;
     }
-    .score .box{
-        background-color: #eb2f06;
-        border: 1px solid black;
-        padding: 10px;
-        border-radius: 4px;
-        color: #34495e;
-        font-size: 24px;
+    .score { 
+        padding: 20px;
+        .box{
+            background-color: #eb2f06;
+            border: 1px solid black;
+            padding: 10px;
+            border-radius: 4px;
+            color: #34495e;
+            font-size: 24px;
+        }
     }
     #playerOne {
         position: absolute;
-        left: 70px;
+        left: 150px;
     }
     #playerTwo {
         position: absolute;
-        right: 70px;
+        right: 150px;
     }
+}
+.messages {
+    padding: 40px;
 }
 
 #greeter-button {
