@@ -198,3 +198,4 @@ function main() {
 }
 
 main();
+disableButton();
